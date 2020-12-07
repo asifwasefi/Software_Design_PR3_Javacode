@@ -40,7 +40,7 @@ public class RegistrationDB_UTest
         Field field = RegistrationDB.class.getDeclaredField("db");
         field.setAccessible(true);
 
-        Database registrationDB_underTest = new RegistrationDB();
+        Database registrationDB_underTest = RegistrationDB.getInstance();
         HashMap<Employee, RegisterEntry> mock_db = (HashMap<Employee, RegisterEntry>) Mockito.mock(HashMap.class);
         field.set(registrationDB_underTest, mock_db);
 
@@ -57,7 +57,7 @@ public class RegistrationDB_UTest
         Field field = RegistrationDB.class.getDeclaredField("db");
         field.setAccessible(true);
 
-        Database registrationDB_underTest = new RegistrationDB();
+        Database registrationDB_underTest = RegistrationDB.getInstance();
         HashMap<Employee, RegisterEntry> mock_db = new HashMap<>();
         field.set(registrationDB_underTest, mock_db);
 
@@ -75,7 +75,7 @@ public class RegistrationDB_UTest
         Field field = RegistrationDB.class.getDeclaredField("db");
         field.setAccessible(true);
 
-        Database registrationDB_underTest = new RegistrationDB();
+        Database registrationDB_underTest = RegistrationDB.getInstance();
         HashMap<Employee, RegisterEntry> mock_db = new HashMap<>();
         field.set(registrationDB_underTest, mock_db);
 

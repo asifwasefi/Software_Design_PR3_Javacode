@@ -23,7 +23,7 @@ public class Main
 
     public void run()
     {
-        Database timedb = new RegistrationDB();
+        Database timedb = RegistrationDB.getInstance();
         Controller register= new RegistrationController(timedb);
 
         Employee e1 = new Programmer("Alice");

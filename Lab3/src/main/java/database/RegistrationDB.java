@@ -10,10 +10,29 @@ public class RegistrationDB extends Database
 {
     private final HashMap<Employee, RegisterEntry> db;
 
-    public RegistrationDB()
-    {
-        this.db = new HashMap<>();
-    }
+    private static RegistrationDB uniqueInstance;
+
+//    original code
+//    public RegistrationDB()
+////    {
+////        this.db = new HashMap<>();
+////    }
+
+//    Private constructor (Only this class itself can make it by invoking getInstance method)
+        private RegistrationDB()
+        {
+            this.db = new HashMap<>();
+        }
+
+        public static RegistrationDB getInstance()
+        {
+            if (uniqueInstance == null)//lazy instantiation
+            {
+                uniqueInstance = new RegistrationDB();
+            }
+            return uniqueInstance;
+        }
+
 
     @Override
     public void addEntry(Employee e, RegisterEntry re)
