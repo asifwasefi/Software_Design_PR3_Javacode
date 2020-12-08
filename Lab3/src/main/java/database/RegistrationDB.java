@@ -38,8 +38,10 @@ public class RegistrationDB extends Database
     public void addEntry(Employee e, RegisterEntry re)
     {
         this.db.put(e, re);
+        HashMap<Employee,RegisterEntry> databaseEntry = new HashMap<>();databaseEntry.put(e,re);
         setChanged();//Mark the Observable object as changed
-        notifyObservers();//Notify all observer objects of the Observable object. Upon notification the update() method of concenrning observer is executed
+        notifyObservers(databaseEntry);//Notify all observer objects of the Observable object. Upon notification the update() method of concerning observer is executed
+        //We give as argument a hashMap which only contains the most recent employee and register entry added to it
     }
 
     @Override

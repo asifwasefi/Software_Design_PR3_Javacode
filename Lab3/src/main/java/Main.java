@@ -7,6 +7,8 @@ import employee.Employee;
 import employee.Manager;
 import employee.Programmer;
 import observers.ObserverNotifier;
+import observers.ObserverPrintEmployeeAndEntry;
+import observers.ObserverPrintEntry;
 import register_entry.RegisterEntry;
 
 public class Main
@@ -29,6 +31,8 @@ public class Main
 
         //Add observer objects of the Observable database
         ObserverNotifier observerNotifier = new ObserverNotifier(timedb);
+        ObserverPrintEmployeeAndEntry observerPrintEmployeeAndEntry = new ObserverPrintEmployeeAndEntry(timedb);
+        ObserverPrintEntry observerPrintEntry = new ObserverPrintEntry(timedb);
 
         Employee e1 = new Programmer("Alice");
         Employee e2 = new CustomerService("Bob");
@@ -37,8 +41,8 @@ public class Main
         register.checkIn(e1);
         register.checkIn(e2);
 
-        print(e1, timedb.getEntry(e1));
-        print(e2, timedb.getEntry(e2));
+//        print(e1, timedb.getEntry(e1));
+//        print(e2, timedb.getEntry(e2));
 
         // We missed the print section of this checkin
         register.checkIn(e3);
@@ -47,9 +51,9 @@ public class Main
         register.checkOut(e2);
         register.checkOut(e3);
 
-        print(e1, timedb.getEntry(e1));
-        print(e2, timedb.getEntry(e2));
-        print(e3, timedb.getEntry(e3));
+//        print(e1, timedb.getEntry(e1));
+//        print(e2, timedb.getEntry(e2));
+//        print(e3, timedb.getEntry(e3));
     }
 
     public void print(Employee e, RegisterEntry re)
