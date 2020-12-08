@@ -6,6 +6,7 @@ import employee.CustomerService;
 import employee.Employee;
 import employee.Manager;
 import employee.Programmer;
+import observers.ObserverNotifier;
 import register_entry.RegisterEntry;
 
 public class Main
@@ -25,6 +26,9 @@ public class Main
     {
         Database timedb = RegistrationDB.getInstance();
         Controller register= new RegistrationController(timedb);
+
+        //Add observer objects of the Observable database
+        ObserverNotifier observerNotifier = new ObserverNotifier(timedb);
 
         Employee e1 = new Programmer("Alice");
         Employee e2 = new CustomerService("Bob");

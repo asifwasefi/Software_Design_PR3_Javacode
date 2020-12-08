@@ -38,11 +38,23 @@ public class RegistrationDB extends Database
     public void addEntry(Employee e, RegisterEntry re)
     {
         this.db.put(e, re);
+        setChanged();//Mark the Observable object as changed
+        notifyObservers();//Notify all observer objects of the Observable object. Upon notification the update() method of concenrning observer is executed
     }
 
     @Override
     public RegisterEntry getEntry(Employee e)
     {
         return this.db.getOrDefault(e, new RegisterEntryNull());
+    }
+
+    @Override
+    public void notifyObservers() {
+        super.notifyObservers();
+    }
+
+    @Override
+    protected synchronized void setChanged() {
+        super.setChanged();
     }
 }
