@@ -1,3 +1,4 @@
+import Factory.EmployeeFactory;
 import controller.Controller;
 import controller.RegistrationController;
 import database.Database;
@@ -34,9 +35,16 @@ public class Main
         ObserverPrintEmployeeAndEntry observerPrintEmployeeAndEntry = new ObserverPrintEmployeeAndEntry(timedb);
         ObserverPrintEntry observerPrintEntry = new ObserverPrintEntry(timedb);
 
-        Employee e1 = new Programmer("Alice");
-        Employee e2 = new CustomerService("Bob");
-        Employee e3 = new Manager("Charlie");
+//        Employee e1 = new Programmer("Alice");
+//        Employee e2 = new CustomerService("Bob");
+//        Employee e3 = new Manager("Charlie");
+
+
+        //Make an EmployeeFactory
+        EmployeeFactory employeeFactory = new EmployeeFactory();
+        Employee e1 = employeeFactory.getEmployee("Alice","Programmer");
+        Employee e2 = employeeFactory.getEmployee("Bob","CustomerService");
+        Employee e3 = employeeFactory.getEmployee("Charlie","Manager");
 
         register.checkIn(e1);
         register.checkIn(e2);
