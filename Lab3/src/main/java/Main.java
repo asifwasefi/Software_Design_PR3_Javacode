@@ -1,4 +1,3 @@
-import Factory.EmployeeFactory;
 import controller.Controller;
 import controller.RegistrationController;
 import database.Database;
@@ -7,10 +6,12 @@ import employee.CustomerService;
 import employee.Employee;
 import employee.Manager;
 import employee.Programmer;
+import Factory.EmployeeFactory;
+import register_entry.RegisterEntry;
+import view.ViewFrame;
 import observers.ObserverNotifier;
 import observers.ObserverPrintEmployeeAndEntry;
 import observers.ObserverPrintEntry;
-import register_entry.RegisterEntry;
 
 public class Main
 {
@@ -27,47 +28,55 @@ public class Main
 
     public void run()
     {
+        // Replace with your own objects
         Database timedb = RegistrationDB.getInstance();
-        Controller register= new RegistrationController(timedb);
+        RegistrationController register= new RegistrationController(timedb);
+        EmployeeFactory factory = new EmployeeFactory();
+
+        ViewFrame view = new ViewFrame();
+        view.initialize();
+
+//        // Replace with your own observers
+//        PrintEntry printEntry = new PrintEntry();
+//        PrintUpdated printUpdated = new PrintUpdated();
+//        timedb.addObserver(printEntry);
+//        timedb.addObserver(printUpdated);
+
 
         //Add observer objects of the Observable database
         ObserverNotifier observerNotifier = new ObserverNotifier(timedb);
         ObserverPrintEmployeeAndEntry observerPrintEmployeeAndEntry = new ObserverPrintEmployeeAndEntry(timedb);
         ObserverPrintEntry observerPrintEntry = new ObserverPrintEntry(timedb);
 
-//        Employee e1 = new Programmer("Alice");
-//        Employee e2 = new CustomerService("Bob");
-//        Employee e3 = new Manager("Charlie");
+        // Replace with your own employee creation methods
+        Employee e1 = factory.getEmployee("Alice", "Programmer");
+        Employee e2 = factory.getEmployee("Bob", "CustomerService");
+        Employee e3 = factory.getEmployee("Charlie", "Manager");
 
-
-        //Make an EmployeeFactory
-        EmployeeFactory employeeFactory = new EmployeeFactory();
-        Employee e1 = employeeFactory.getEmployee("Alice","Programmer");
-        Employee e2 = employeeFactory.getEmployee("Bob","CustomerService");
-        Employee e3 = employeeFactory.getEmployee("Charlie","Manager");
+        sleep(3000);
 
         register.checkIn(e1);
         register.checkIn(e2);
-
-//        print(e1, timedb.getEntry(e1));
-//        print(e2, timedb.getEntry(e2));
-
-        // We missed the print section of this checkin
         register.checkIn(e3);
 
+        sleep(1000);
         register.checkOut(e1);
+        sleep(1000);
         register.checkOut(e2);
+        sleep(1000);
         register.checkOut(e3);
-
-//        print(e1, timedb.getEntry(e1));
-//        print(e2, timedb.getEntry(e2));
-//        print(e3, timedb.getEntry(e3));
     }
 
-    public void print(Employee e, RegisterEntry re)
+    public void sleep(int millis)
     {
-        System.out.println(e.getName() +
-                " (" + e.getFunction() + ")" +
-                " " + re);
+        try
+        {
+            System.out.print("Sleeping [    ]\r");
+            Thread.sleep(millis);
+            System.out.println("Sleeping [ OK ]");
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
