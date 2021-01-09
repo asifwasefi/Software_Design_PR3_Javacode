@@ -33,7 +33,7 @@ public class Main
         RegistrationController register= new RegistrationController(timedb);
         EmployeeFactory factory = new EmployeeFactory();
 
-        ViewFrame view = new ViewFrame();
+        ViewFrame view = new ViewFrame(register);
         view.initialize();
 
 //        // Replace with your own observers
