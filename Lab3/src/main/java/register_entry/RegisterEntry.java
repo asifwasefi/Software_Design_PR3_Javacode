@@ -46,12 +46,12 @@ public class RegisterEntry
 
         if(this.checkedIn)
         {
-            status = "in";
+            status = "added";
         } else
         {
-            status = "out";
+            status = "removed";
         }
 
-        return String.format("checked %s at %02d:%02d:%02d", status, getHours(), getMinutes(), getSeconds());
+        return String.format("%s at %02d:%02d:%02d", status, getHours(), getMinutes(), getSeconds());
     }
 }

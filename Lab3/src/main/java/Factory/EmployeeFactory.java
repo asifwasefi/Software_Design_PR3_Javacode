@@ -1,14 +1,24 @@
 package Factory;
 
-import employee.Employee;
+import database.RegistrationDB;
+import person.Person;
+import register_entry.RegisterEntry;
+import register_entry.RegisterEntryNull;
+
+import java.util.HashMap;
 
 public class EmployeeFactory {
 
-    public Employee getEmployee(String name, String function)
+    public Person getEmployee(String name)
     {
-        if (function == "Programmer" || function == "CustomerService" || function == "Manager")
-            return new Employee(name, function);
+        Person tempPerson = RegistrationDB.getInstance().getPerson(name);
+        if (tempPerson != null)
+        {
+            return tempPerson;
+        }
         else
-            return null;
+        {
+            return new Person(name);
+        }
     }
 }

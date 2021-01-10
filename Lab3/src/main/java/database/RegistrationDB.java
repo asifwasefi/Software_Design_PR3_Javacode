@@ -1,6 +1,6 @@
 package database;
 
-import employee.Employee;
+import person.Person;
 import register_entry.RegisterEntry;
 import register_entry.RegisterEntryNull;
 
@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class RegistrationDB extends Database
 {
-    private final HashMap<Employee, RegisterEntry> db;
+    private final HashMap<Person, RegisterEntry> db;
 
     private static RegistrationDB uniqueInstance;
 
@@ -35,20 +35,35 @@ public class RegistrationDB extends Database
 
 
     @Override
-    public void addEntry(Employee e, RegisterEntry re)
+    public void addEntry(Person e, RegisterEntry re)
     {
         this.db.put(e, re);
-        HashMap<Employee,RegisterEntry> databaseEntry = new HashMap<>();databaseEntry.put(e,re);
+        HashMap<Person,RegisterEntry> databaseEntry = new HashMap<>();databaseEntry.put(e,re);
         setChanged();//Mark the Observable object as changed
         notifyObservers(databaseEntry);//Notify all observer objects of the Observable object. Upon notification the update() method of concerning observer is executed
-        //We give as argument a hashMap which only contains the most recent employee and register entry added to it
+        //We give as argument a hashMap which only contains the most recent person and register entry added to it
     }
 
     @Override
-    public RegisterEntry getEntry(Employee e)
+    public RegisterEntry getEntry(Person e)
     {
         return this.db.getOrDefault(e, new RegisterEntryNull());
     }
+
+    public Person getPerson(String name)
+    {
+        Person tempPerson = null;
+        for (Person person : db.keySet())
+        {
+            if (person.getName().equals(name))
+            {
+                tempPerson = person;
+            }
+        }
+        return tempPerson;
+
+    }
+
 
     @Override
     public void notifyObservers() {

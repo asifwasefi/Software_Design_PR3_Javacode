@@ -1,13 +1,8 @@
-import controller.Controller;
 import controller.RegistrationController;
 import database.Database;
 import database.RegistrationDB;
-import employee.CustomerService;
-import employee.Employee;
-import employee.Manager;
-import employee.Programmer;
+import person.Person;
 import Factory.EmployeeFactory;
-import register_entry.RegisterEntry;
 import view.ViewFrame;
 import observers.ObserverNotifier;
 import observers.ObserverPrintEmployeeAndEntry;
@@ -48,23 +43,23 @@ public class Main
         ObserverPrintEmployeeAndEntry observerPrintEmployeeAndEntry = new ObserverPrintEmployeeAndEntry(timedb);
         ObserverPrintEntry observerPrintEntry = new ObserverPrintEntry(timedb);
 
-        // Replace with your own employee creation methods
-        Employee e1 = factory.getEmployee("Alice", "Programmer");
-        Employee e2 = factory.getEmployee("Bob", "CustomerService");
-        Employee e3 = factory.getEmployee("Charlie", "Manager");
-
-        sleep(3000);
-
-        register.checkIn(e1);
-        register.checkIn(e2);
-        register.checkIn(e3);
-
-        sleep(1000);
-        register.checkOut(e1);
-        sleep(1000);
-        register.checkOut(e2);
-        sleep(1000);
-        register.checkOut(e3);
+//        // Replace with your own person creation methods
+//        Person e1 = factory.getEmployee("Alice");
+//        Person e2 = factory.getEmployee("Bob");
+//        Person e3 = factory.getEmployee("Charlie");
+//
+//        sleep(3000);
+//
+//        register.checkIn(e1);
+//        register.checkIn(e2);
+//        register.checkIn(e3);
+//
+//        sleep(1000);
+//        register.checkOut(e1);
+//        sleep(1000);
+//        register.checkOut(e2);
+//        sleep(1000);
+//        register.checkOut(e3);
     }
 
     public void sleep(int millis)

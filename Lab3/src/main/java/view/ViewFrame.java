@@ -2,7 +2,7 @@ package view;
 
 import controller.RegistrationController;
 import database.RegistrationDB;
-import employee.Employee;
+import person.Person;
 import register_entry.RegisterEntry;
 import view.panels.ListPanel;
 import view.panels.RegistrationButtonPanel;
@@ -47,7 +47,7 @@ public class ViewFrame extends JFrame implements Observer
     @Override
     public void update(Observable o, Object arg) {
 
-        HashMap<Employee, RegisterEntry> databaseEntry = (HashMap<Employee,RegisterEntry>) arg;
+        HashMap<Person, RegisterEntry> databaseEntry = (HashMap<Person,RegisterEntry>) arg;
         for(RegisterEntry re : databaseEntry.values())
         {
             panel.addEntry(re);

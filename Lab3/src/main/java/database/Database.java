@@ -1,6 +1,6 @@
 package database;
 
-import employee.Employee;
+import person.Person;
 import register_entry.RegisterEntry;
 import java.util.Observable;
 
@@ -11,6 +11,6 @@ public abstract class Database extends Observable
 
     }
 
-    public abstract void addEntry(Employee e, RegisterEntry re);
-    public abstract RegisterEntry getEntry(Employee e);
+    public abstract void addEntry(Person e, RegisterEntry re);
+    public abstract RegisterEntry getEntry(Person e);
 }

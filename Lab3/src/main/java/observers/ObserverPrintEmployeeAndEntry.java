@@ -1,6 +1,6 @@
 package observers;
 
-import employee.Employee;
+import person.Person;
 import register_entry.RegisterEntry;
 
 import java.util.Observable;
@@ -17,12 +17,12 @@ public class ObserverPrintEmployeeAndEntry implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        HashMap<Employee, RegisterEntry> databaseEntry = (HashMap<Employee,RegisterEntry>) arg;
+        HashMap<Person, RegisterEntry> databaseEntry = (HashMap<Person,RegisterEntry>) arg;
 
-        for(HashMap.Entry<Employee, RegisterEntry> entry : databaseEntry.entrySet())
+        for(HashMap.Entry<Person, RegisterEntry> entry : databaseEntry.entrySet())
         {
             System.out.println(entry.getKey().getName() +
-                    " (" + entry.getKey().getFunction() + ")" +
+
                     " " + entry.getValue());
         }
     }

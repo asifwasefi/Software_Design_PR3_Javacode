@@ -2,10 +2,7 @@ package view.panels;
 
 import Factory.EmployeeFactory;
 import controller.RegistrationController;
-import database.Database;
-import database.RegistrationDB;
-import employee.Employee;
-import employee.Programmer;
+import person.Person;
 
 import javax.swing.*;
 
@@ -13,23 +10,25 @@ public class RegistrationButtonPanel extends JPanel {
 
     private JButton checkIn;
     private JButton checkOut;
+    private JTextField personName;
 
     // Get your controller in this private field
     private RegistrationController controller;
 
-    // For now, just make a new employee in this class via your factory.
+    // For now, just make a new person in this class via your factory.
     // You can change this later on to a more unified way
-    private Employee employee;
+    private Person person;
 
     // Get your controller in this class via the constructor
     public RegistrationButtonPanel(RegistrationController controller)
     {
         JLabel label = new JLabel("Registration buttons");
-        this.checkIn = new JButton("Check In");
-        this.checkOut = new JButton("Check Out");
+        this.checkIn = new JButton("Add Person");
+        this.checkOut = new JButton("Remove Person");
+        this.personName = new JTextField("Name of Person");
 
-        // Create your temporary employee here
-        this.employee = new EmployeeFactory().getEmployee("TempEmployee","Programmer");
+        // Create your temporary person here
+//        this.person = new EmployeeFactory().getEmployee("TempEmployee");
         addCheckInButtonActionListener();
         addCheckOutButtonActionListener();
 
@@ -41,6 +40,7 @@ public class RegistrationButtonPanel extends JPanel {
         this.add(label);
         this.add(this.checkIn);
         this.add(this.checkOut);
+        this.add(this.personName);
     }
 
     public void addCheckInButtonActionListener()
@@ -48,7 +48,9 @@ public class RegistrationButtonPanel extends JPanel {
         this.checkIn.addActionListener(listener ->
         {
             // Insert here your controller functionality
-            controller.checkIn(employee);
+            String input  = personName.getText();
+            Person p = new Person(input);
+            controller.checkIn(p);
         });
     }
 
@@ -57,7 +59,9 @@ public class RegistrationButtonPanel extends JPanel {
         this.checkOut.addActionListener(listener ->
         {
             // Insert here your controller functionality
-            controller.checkOut(employee);
+            String input  = personName.getText();
+            Person p = new Person(input);
+            controller.checkOut(p);
         });
     }
 

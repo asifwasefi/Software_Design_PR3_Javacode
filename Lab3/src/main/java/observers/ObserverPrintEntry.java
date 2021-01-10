@@ -1,6 +1,6 @@
 package observers;
 
-import employee.Employee;
+import person.Person;
 import register_entry.RegisterEntry;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class ObserverPrintEntry implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        HashMap<Employee, RegisterEntry> databaseEntry = (HashMap<Employee,RegisterEntry>) arg;
+        HashMap<Person, RegisterEntry> databaseEntry = (HashMap<Person,RegisterEntry>) arg;
 
         for(RegisterEntry re : databaseEntry.values())
         {
