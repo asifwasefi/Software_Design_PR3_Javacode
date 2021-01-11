@@ -66,8 +66,9 @@ public class RegistrationTicket extends DatabaseTicket
         HashMap<  HashMap<Person,Person>, Double   > map = new HashMap<>();
         ArrayList<Person> allPeople = RegistrationDB.getInstance().getPeople();
 
-
-        for (HashMap.Entry<Ticket, Person> entry : db.entrySet()) {
+        //GENERATE complex hashmap where   Hashmap< Hashmap<Person,Person>,Double> first person is payer, 2nd person is profiter and Double is amount paid
+        for (HashMap.Entry<Ticket, Person> entry : db.entrySet())
+        {
 //            System.out.println(entry.getValue().getName() + " paid € " + entry.getKey().getTotalPrice()+ " for ticket number "+ entry.getKey().getTicketNumber());
             Iterator<Person> it = allPeople.iterator();
             while (it.hasNext())
@@ -83,17 +84,76 @@ public class RegistrationTicket extends DatabaseTicket
 
         }
 
-        for (HashMap.Entry<HashMap<Person,Person>, Double> entry : map.entrySet()) {
 
-            HashMap<Person,Person> payerProfiter = entry.getKey();
-            for (HashMap.Entry<Person,Person> entryPayerProfiter : payerProfiter.entrySet())
+        //Make a last standing with HashMap<Person,Double> Person in key has to either pay or receive amount in Value
+        HashMap<Person,Double> standings = new HashMap<>();
+        Iterator<Person> it = allPeople.iterator();
+        while (it.hasNext())
+        {
+            Person nextPerson = it.next();
+            double amountPaid=0;
+            double amountToPay=0;
+
+            for (HashMap.Entry<HashMap<Person,Person>, Double> entry : map.entrySet())
             {
-                System.out.println(entryPayerProfiter.getKey().getName() + " has paid € "+ entry.getValue()+" for " + entryPayerProfiter.getValue().getName());
+
+                HashMap<Person,Person> payerProfiter = entry.getKey();
+                for (HashMap.Entry<Person,Person> entryPayerProfiter : payerProfiter.entrySet())
+                {
+                    if(nextPerson.equals(entryPayerProfiter.getKey()))//The amount person has paid in total
+                    {
+                        amountPaid = amountPaid+entry.getValue();
+                    }
+                    if(nextPerson.equals(entryPayerProfiter.getValue()))//The amount person has profited in total
+                    {
+                        amountToPay = amountToPay+entry.getValue();
+                    }
+                }
+
             }
+            System.out.println(nextPerson.getName()+ " has paid € " + amountPaid + " and profited € "+ amountToPay);
+            amountToPay = amountToPay -amountPaid;
+            standings.put(nextPerson,amountToPay);
 
         }
 
-        System.out.println(RegistrationDB.getInstance().getPeople().size());
+
+        //last standing. Here we determine who has to pay how much to whom
+        for (HashMap.Entry<Person, Double> outsideEntry : standings.entrySet())
+        {
+            double toPayAmount = outsideEntry.getValue();
+            while (toPayAmount>0)//the person has to pay (positive amount)
+            {
+                for (HashMap.Entry<Person, Double> insideEntry : standings.entrySet())
+                {
+                    double profit = insideEntry.getValue();
+                    if(profit <0)//the person has to be paid (positive amount)
+                    {
+
+                        if (Math.abs(toPayAmount) > Math.abs(profit))
+                        {
+
+                            System.out.println(outsideEntry.getKey().getName()+ " has to pay € "+ Math.abs(profit) +" to " + insideEntry.getKey().getName() );
+                            toPayAmount = toPayAmount + profit;
+                            profit = 0;
+                        }
+                        else
+                        {
+
+                            System.out.println(outsideEntry.getKey().getName()+ " has to pay € "+ Math.abs(toPayAmount) +" to " + insideEntry.getKey().getName() );
+                            toPayAmount = 0;
+                            profit = toPayAmount + profit;
+                        }
+
+                    }
+                    standings.put(insideEntry.getKey(),profit);
+                }
+                standings.put(outsideEntry.getKey(),toPayAmount);
+            }
+        }
+
+
+
 
     }
 
