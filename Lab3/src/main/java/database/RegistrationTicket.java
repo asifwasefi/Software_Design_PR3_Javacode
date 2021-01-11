@@ -127,7 +127,7 @@ public class RegistrationTicket extends DatabaseTicket
                 for (HashMap.Entry<Person, Double> insideEntry : standings.entrySet())
                 {
                     double profit = insideEntry.getValue();
-                    if(profit <0)//the person has to be paid (positive amount)
+                    if(profit <0)//the person has to be paid (negative amount)
                     {
 
                         if (Math.abs(toPayAmount) > Math.abs(profit))
