@@ -3,7 +3,9 @@ package database;
 import person.Person;
 import register_entry.RegisterEntry;
 import register_entry.RegisterEntryNull;
+import ticket.Ticket;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RegistrationDB extends Database
@@ -11,6 +13,7 @@ public class RegistrationDB extends Database
     private final HashMap<Person, RegisterEntry> db;
 
     private static RegistrationDB uniqueInstance;
+    private static int numberOfPeople=0;
 
 //    original code
 //    public RegistrationDB()
@@ -42,6 +45,14 @@ public class RegistrationDB extends Database
         setChanged();//Mark the Observable object as changed
         notifyObservers(databaseEntry);//Notify all observer objects of the Observable object. Upon notification the update() method of concerning observer is executed
         //We give as argument a hashMap which only contains the most recent person and register entry added to it
+        if (re.isCheckedIn())//if person added to database
+        {
+            numberOfPeople++;
+        }
+        else
+        {
+            numberOfPeople--;
+        }
     }
 
     @Override
@@ -62,6 +73,23 @@ public class RegistrationDB extends Database
         }
         return tempPerson;
 
+    }
+
+    public ArrayList<Person> getPeople()
+    {
+        ArrayList<Person> uniquePeople = new ArrayList<Person>();
+        for (HashMap.Entry<Person, RegisterEntry> entry : db.entrySet()) {
+            if(!uniquePeople.contains(entry.getKey()) && entry.getValue().isCheckedIn())//if person checked in (= added to database) and not in uniquePeopleList
+            {
+                uniquePeople.add(entry.getKey());
+            }
+        }
+        return uniquePeople;
+    }
+
+    public int getNumberOfPeople()
+    {
+        return numberOfPeople;
     }
 
 

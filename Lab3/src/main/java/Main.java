@@ -1,8 +1,14 @@
 import controller.RegistrationController;
+import controller.TicketController;
 import database.Database;
+import database.DatabaseTicket;
 import database.RegistrationDB;
+import database.RegistrationTicket;
+import observers.ObserverPrintTicket;
 import person.Person;
 import Factory.EmployeeFactory;
+import ticket.Flight;
+import ticket.Ticket;
 import view.ViewFrame;
 import observers.ObserverNotifier;
 import observers.ObserverPrintEmployeeAndEntry;
@@ -25,10 +31,12 @@ public class Main
     {
         // Replace with your own objects
         Database timedb = RegistrationDB.getInstance();
+        DatabaseTicket ticketdb = RegistrationTicket.getInstance();
         RegistrationController register= new RegistrationController(timedb);
+        TicketController ticketController = new TicketController(ticketdb);
         EmployeeFactory factory = new EmployeeFactory();
 
-        ViewFrame view = new ViewFrame(register);
+        ViewFrame view = new ViewFrame(register, ticketController);
         view.initialize();
 
 //        // Replace with your own observers
@@ -42,6 +50,7 @@ public class Main
         ObserverNotifier observerNotifier = new ObserverNotifier(timedb);
         ObserverPrintEmployeeAndEntry observerPrintEmployeeAndEntry = new ObserverPrintEmployeeAndEntry(timedb);
         ObserverPrintEntry observerPrintEntry = new ObserverPrintEntry(timedb);
+        ObserverPrintTicket observerPrintTicket = new ObserverPrintTicket(ticketdb);
 
 //        // Replace with your own person creation methods
 //        Person e1 = factory.getEmployee("Alice");
@@ -60,7 +69,14 @@ public class Main
 //        register.checkOut(e2);
 //        sleep(1000);
 //        register.checkOut(e3);
+
+
+
+
     }
+
+
+
 
     public void sleep(int millis)
     {
